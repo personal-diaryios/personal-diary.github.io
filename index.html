@@ -1,1 +1,496 @@
-this is homepage
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Personal Diary — Private diary with lock</title>
+  <meta name="description" content="My Personal Diary — a private, password-protected diary app. Lock entries with PIN/Face ID, beautiful themes, backups and more." />
+  <meta name="theme-color" content="#0b1220" />
+
+  <!-- Simple, modern system font stack -->
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f1724;
+      --muted:#9aa4b2;
+      --accent:#6ee7b7;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(110,231,183,0.06), transparent 8%),
+        radial-gradient(600px 300px at 90% 90%, rgba(99,102,241,0.04), transparent 10%),
+        linear-gradient(180deg,var(--bg), #061018 120%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:32px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      gap:24px;
+      min-height:100vh;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:28px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:52px;height:52px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,#10b981,#06b6d4);
+      box-shadow: 0 6px 18px rgba(6,11,18,0.6), inset 0 -6px 16px rgba(255,255,255,0.06);
+      font-weight:700;
+      font-size:18px;
+      color:#021012;
+    }
+    nav{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .btn{
+      background:var(--accent);
+      color:#032018;
+      padding:10px 14px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(110,231,183,0.08);
+    }
+    .ghost{
+      background:transparent;
+      padding:8px 12px;
+      border-radius:10px;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    main{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:start;
+      width:100%;
+    }
+
+    /* HERO */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      padding:28px;
+      border-radius:var(--radius);
+      box-shadow: 0 10px 30px rgba(2,6,12,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .kicker{
+      color:var(--accent);
+      font-weight:700;
+      letter-spacing:0.6px;
+      display:inline-block;
+      margin-bottom:14px;
+      font-size:13px;
+    }
+    h1{
+      margin:0 0 10px 0;
+      font-size:32px;
+      line-height:1.05;
+      letter-spacing:-0.4px;
+      color: #f1fbf7;
+    }
+    p.lead{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-size:15px;
+      max-width:60ch;
+    }
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    /* phone mock */
+    .phone{
+      width:100%;
+      max-width:420px;
+      border-radius:26px;
+      padding:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 20px 50px rgba(2,6,12,0.6);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .mock{
+      height:640px;
+      border-radius:18px;
+      background:linear-gradient(180deg,#071021, #08141f 60%);
+      position:relative;
+      overflow:hidden;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .mock .top{
+      height:18px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+    }
+    .indicator{width:8px;height:8px;border-radius:50%;background:#0f1724;opacity:0.6}
+    .screen{
+      background:linear-gradient(180deg,#06131a, #07202b 70%);
+      border-radius:12px;
+      flex:1;
+      padding:14px;
+      color:#dff8ee;
+      font-size:14px;
+      overflow:auto;
+      box-shadow: inset 0 -6px 30px rgba(0,0,0,0.6);
+    }
+    .entry{
+      padding:12px;
+      border-radius:12px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      margin-bottom:12px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .entry h4{margin:0 0 6px 0;font-size:15px}
+    .entry p{margin:0;color:var(--muted);font-size:13px}
+
+    /* Features */
+    .features{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+    .feature{
+      background:var(--glass);
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .feature h5{margin:0 0 6px 0;font-size:14px}
+    .feature p{margin:0;color:var(--muted);font-size:13px}
+
+    /* screenshots carousel */
+    .carousel{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:center;
+      margin-top:12px;
+    }
+    .shot{
+      width:220px;
+      height:390px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#0b1620,#07121a);
+      display:grid;
+      place-items:center;
+      box-shadow: 0 12px 36px rgba(2,6,12,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+      position:relative;
+      overflow:hidden;
+    }
+    .shot img{width:100%;height:100%;object-fit:cover;display:block}
+    .shot .label{
+      position:absolute;left:10px;bottom:10px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,0.4);
+      font-size:12px;color:#cfeee0;
+    }
+
+    .dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,0.06);cursor:pointer}
+    .dot.active{background:var(--accent);box-shadow:0 6px 16px rgba(110,231,183,0.08)}
+
+    footer{
+      margin-top:28px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    /* responsive */
+    @media (max-width:980px){
+      main{
+        grid-template-columns: 1fr;
+      }
+      .phone{max-width:520px;margin:0 auto}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <a class="brand" href="#" aria-label="My Personal Diary">
+        <div class="logo">MPD</div>
+        <div>
+          <div style="font-weight:700">My Personal Diary</div>
+          <div style="font-size:12px;color:var(--muted)">Private diary • Lock • Backups</div>
+        </div>
+      </a>
+
+      <nav aria-label="Main">
+        <a class="ghost" href="#features">Features</a>
+        <a class="ghost" href="#screenshots">Screenshots</a>
+        <a class="btn" id="downloadBtn" href="https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394" target="_blank" rel="noopener">Download on App Store</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <span class="kicker">Private • Simple • Beautiful</span>
+        <h1 id="hero-title">Your personal diary — locked, backed up and always yours</h1>
+        <p class="lead">Write thoughts, memories and everyday moments in a safe, password-protected diary. PIN, Face/Touch ID support, encrypted storage, custom themes and export options — beautifully designed for daily journaling.</p>
+
+        <div class="actions">
+          <a class="btn" href="https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394" target="_blank" rel="noopener">Get it on the App Store</a>
+          <button class="ghost" id="previewBtn" aria-haspopup="dialog">Live preview</button>
+          <a class="ghost" href="#features">See features</a>
+        </div>
+
+        <div id="features" style="margin-top:18px;">
+          <div class="features" role="list">
+            <div class="feature" role="listitem">
+              <h5>Lock & privacy</h5>
+              <p>PIN & biometric lock, app-level privacy and secure local storage.</p>
+            </div>
+            <div class="feature" role="listitem">
+              <h5>Beautiful themes</h5>
+              <p>Multiple themes and fonts for a cozy writing experience day or night.</p>
+            </div>
+            <div class="feature" role="listitem">
+              <h5>Auto-backup</h5>
+              <p>Back up to iCloud / export entries to keep your memories safe.</p>
+            </div>
+            <div class="feature" role="listitem">
+              <h5>Search & tags</h5>
+              <p>Fast search, tags and calendar view to find entries quickly.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <div>Designed for iOS • Small, private & ad-free</div>
+          <div>© <span id="year"></span> My Personal Diary</div>
+        </footer>
+      </section>
+
+      <aside class="phone" aria-label="App preview">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-weight:700">App Preview</div>
+          <div style="color:var(--muted);font-size:13px">v1.0</div>
+        </div>
+
+        <div class="mock" id="mockScreen" aria-live="polite">
+          <div class="top">
+            <div class="indicator" aria-hidden="true"></div>
+            <div style="width:60px;height:6px;border-radius:6px;background:rgba(255,255,255,0.02)"></div>
+            <div class="indicator" aria-hidden="true"></div>
+          </div>
+
+          <div class="screen" id="screenContent">
+            <!-- sample entries -->
+            <div class="entry">
+              <h4>June 12 — A quiet morning</h4>
+              <p>Made coffee and read for thirty minutes. The rain made the city smell like the sea.</p>
+            </div>
+            <div class="entry">
+              <h4>June 10 — Big news</h4>
+              <p>Accepted the new job today. Mixed feelings but excited for the challenge.</p>
+            </div>
+            <div class="entry" aria-hidden="true" style="opacity:0.9">
+              <h4>June 2 — Beach trip</h4>
+              <p>Sunset was incredible. Collected shells and forgot the time.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+            <div style="display:flex;gap:8px">
+              <button class="ghost" style="padding:8px 10px;border-radius:10px" onclick="scrollMock(-1)" aria-label="Previous">◀</button>
+              <button class="ghost" style="padding:8px 10px;border-radius:10px" onclick="scrollMock(1)" aria-label="Next">▶</button>
+            </div>
+            <div style="color:var(--muted);font-size:13px">Locked • PIN enabled</div>
+          </div>
+        </div>
+
+        <div id="screenshots" style="margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font-weight:700">Screenshots</div>
+            <div style="color:var(--muted);font-size:13px">Tap to enlarge</div>
+          </div>
+
+          <div class="carousel" role="list" aria-label="Screenshots carousel">
+            <div class="shot" role="listitem" tabindex="0" onclick="openShot(0)">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='1060'><rect width='100%' height='100%' fill='%23071b26'/><text x='50%' y='50%' fill='%23a6f7e0' font-size='26' font-family='Arial' text-anchor='middle'>Screenshot 1</text></svg>" alt="Screenshot 1 placeholder">
+              <div class="label">Home & entries</div>
+            </div>
+            <div class="shot" role="listitem" tabindex="0" onclick="openShot(1)">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='1060'><rect width='100%' height='100%' fill='%23091b1e'/><text x='50%' y='50%' fill='%23bdeed8' font-size='26' font-family='Arial' text-anchor='middle'>Screenshot 2</text></svg>" alt="Screenshot 2 placeholder">
+              <div class="label">Editor & themes</div>
+            </div>
+            <div class="shot" role="listitem" tabindex="0" onclick="openShot(2)">
+              <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='1060'><rect width='100%' height='100%' fill='%23051b12'/><text x='50%' y='50%' fill='%239ff3c5' font-size='26' font-family='Arial' text-anchor='middle'>Screenshot 3</text></svg>" alt="Screenshot 3 placeholder">
+              <div class="label">Backup & export</div>
+            </div>
+          </div>
+
+          <div class="dots" role="tablist" aria-label="screenshot navigation">
+            <div class="dot active" onclick="selectShot(0)" role="tab" aria-selected="true"></div>
+            <div class="dot" onclick="selectShot(1)" role="tab" aria-selected="false"></div>
+            <div class="dot" onclick="selectShot(2)" role="tab" aria-selected="false"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
+          <!-- Inline App Store badge (SVG) -->
+          <a href="https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394" target="_blank" rel="noopener" aria-label="Download on the App Store" style="text-decoration:none">
+            <svg width="160" height="48" viewBox="0 0 512 153" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <rect rx="12" width="512" height="153" fill="#000" opacity="0.75"/>
+              <g transform="translate(22,27)" fill="#fff">
+                <rect width="110" height="100" rx="20" fill="#0b1220" />
+                <path d="M62 12c-6-7-13-13-22-13-11 0-23 7-30 19-13 20-8 54 15 72 6 5 12 7 18 7 8 0 13-4 20-4 7 0 11 4 19 4 7 0 14-3 20-7 22-16 28-50 15-71-8-12-20-19-31-19-9 0-16 6-22 13z" fill="#06b6d4"/>
+              </g>
+              <g transform="translate(150,30)">
+                <text x="0" y="40" font-family="Inter, Arial" font-size="32" font-weight="700">Get it on</text>
+                <text x="0" y="78" font-family="Inter, Arial" font-size="28">App Store</text>
+              </g>
+            </svg>
+          </a>
+
+          <button id="copyLink" class="ghost" title="Copy App Store link">Copy link</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Light modal for screenshot preview -->
+  <div id="modal" role="dialog" aria-modal="true" aria-hidden="true" style="
+      position:fixed;inset:0;display:grid;place-items:center;
+      background:rgba(2,6,12,0.6);backdrop-filter:blur(4px);padding:20px;
+      z-index:2000;opacity:0;pointer-events:none;transition:opacity .18s;">
+    <div role="document" style="max-width:960px;width:100%;border-radius:12px;background:#03121a;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 30px 80px rgba(2,6,12,0.7);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-weight:700">Preview</div>
+        <button id="closeModal" class="ghost">Close</button>
+      </div>
+      <div id="modalContent" style="height:640px;border-radius:10px;overflow:hidden;display:grid;place-items:center">
+        <!-- injected screenshot big -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mock scroll functions for the phone mock (just animate sample entries)
+    function scrollMock(dir){
+      const sc = document.getElementById('screenContent');
+      sc.scrollBy({top: dir * 220, left:0, behavior:'smooth'});
+    }
+
+    // Carousel logic
+    const shots = document.querySelectorAll('.shot img');
+    const dots = document.querySelectorAll('.dot');
+    let active = 0;
+    function selectShot(i){
+      active = i;
+      dots.forEach((d, idx)=> {
+        d.classList.toggle('active', idx===i);
+        d.setAttribute('aria-selected', idx===i ? 'true' : 'false');
+      });
+      // shift carousel so selected is centered (simple)
+      const container = document.querySelector('.carousel');
+      const item = container.children[i];
+      item.scrollIntoView({behavior:'smooth', inline:'center'});
+    }
+    function openShot(i){
+      // open modal with a bigger copy of the shot
+      const modal = document.getElementById('modal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = '';
+      const img = shots[i].cloneNode(true);
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      content.appendChild(img);
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+      modal.setAttribute('aria-hidden', 'false');
+      selectShot(i);
+    }
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    document.getElementById('modal').addEventListener('click', function(e){
+      if(e.target === this) closeModal();
+    });
+    function closeModal(){
+      const modal = document.getElementById('modal');
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // preview button shows the phone mock area by briefly highlighting it
+    document.getElementById('previewBtn').addEventListener('click', function(){
+      const mock = document.getElementById('mockScreen');
+      mock.animate([{boxShadow:'0 20px 50px rgba(6,11,18,0.6)'},{boxShadow:'0 30px 80px rgba(6,11,18,0.9)'}],{duration:350,iterations:1,fill:'forwards'});
+      mock.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+
+    // copy app link
+    document.getElementById('copyLink').addEventListener('click', async function(){
+      const url = 'https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394';
+      try{
+        await navigator.clipboard.writeText(url);
+        this.textContent = 'Link copied';
+        setTimeout(()=> this.textContent = 'Copy link', 1800);
+      }catch(e){
+        alert('Copy failed — here is the link:\\n' + url);
+      }
+    });
+
+    // accessibility: keyboard nav for shots
+    document.querySelectorAll('.shot').forEach((el, idx) => {
+      el.addEventListener('keydown', (ev) => {
+        if(ev.key === 'Enter' || ev.key === ' ') openShot(idx);
+      });
+    });
+
+    // initial select
+    selectShot(0);
+  </script>
+</body>
+</html>
