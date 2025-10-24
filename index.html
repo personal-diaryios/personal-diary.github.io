@@ -2,99 +2,138 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Personal Diary – Mood Journal</title>
-  <meta name="description" content="A calm, secure, and customizable diary to write freely, track your moods, and protect your memories." />
+  <meta name="description" content="Write freely, track your moods, and protect your memories in a calm, secure, and customizable diary." />
   <link rel="icon" href="images/icon.png" />
   <style>
     :root{
-      --bg:#0b0c10; --card:#12141a; --soft:#1b1f2a; --text:#e9eef7; --muted:#a9b2c7; --brand:#6aa6ff; --brand2:#9f7cff; --ok:#51d49a;
-      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --bg:#0b0c10; --card:#12141a; --soft:#1b1f2a; --text:#e9eef7; --muted:#a9b2c7;
+      --brand:#6aa6ff; --brand2:#9f7cff; --ok:#51d49a; --border:rgba(127,141,170,.18);
+      --shadow:0 10px 30px rgba(0,0,0,.25);
     }
     @media (prefers-color-scheme: light){
       :root{
-        --bg:#f7f9fc; --card:#ffffff; --soft:#eef2f8; --text:#0f172a; --muted:#475569; --brand:#2563eb; --brand2:#7c3aed; --ok:#16a34a;
-        --shadow: 0 10px 30px rgba(2,6,23,.08);
+        --bg:#f7f9fc; --card:#ffffff; --soft:#eef2f8; --text:#0f172a; --muted:#475569;
+        --brand:#2563eb; --brand2:#7c3aed; --ok:#16a34a; --border:rgba(2,6,23,.12);
+        --shadow:0 10px 30px rgba(2,6,23,.08);
       }
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue","Apple Color Emoji","Segoe UI Emoji",sans-serif}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+      font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue","Apple Color Emoji","Segoe UI Emoji",sans-serif}
     a{color:var(--brand);text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 20px}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:var(--shadow)}
-    .brand b{font-size:18px;letter-spacing:.2px}
-    .cta a{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:12px;padding:10px 14px;font-weight:600;box-shadow:var(--shadow)}
-    .cta a:hover{transform:translateY(-1px);transition:.18s ease}
-    .hero{margin-top:28px;background:linear-gradient(180deg,transparent,rgba(127,141,170,.08));border:1px solid rgba(127,141,170,.15);border-radius:18px;overflow:hidden}
-    .hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;padding:28px}
-    .hero h1{margin:0 0 10px;font-size:36px;line-height:1.15;letter-spacing:.2px}
-    .hero p{margin:0 0 18px;color:var(--muted)}
-    .hero .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--soft);border:1px solid rgba(127,141,170,.18);color:var(--text);padding:8px 12px;border-radius:999px;font-size:14px}
-    .cover{border-radius:14px;overflow:hidden;border:1px solid rgba(127,141,170,.18);box-shadow:var(--shadow)}
+
+    /* Top bar */
+    .bar{position:sticky;top:0;z-index:5;background:var(--bg);
+      border-bottom:1px solid var(--border)}
+    .bar-in{max-width:1100px;margin:0 auto;padding:14px 18px;
+      display:flex;align-items:center;justify-content:center}
+    .brand{font-weight:700;letter-spacing:.2px;text-align:center}
+
+    /* Container */
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 18px}
+
+    /* Hero */
+    .hero{display:grid;gap:18px;grid-template-columns:1fr}
+    .hero-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+    .hero-body{display:grid;gap:18px;grid-template-columns:1fr}
+    .icon-box{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+    .app-icon{width:140px;height:140px;border-radius:28px;box-shadow:var(--shadow);border:1px solid var(--border);object-fit:cover}
+    .cta{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px}
+    .cta .btn{
+      display:inline-flex;justify-content:center;align-items:center;
+      width:100%;padding:14px 18px;border-radius:14px;color:#fff;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      font-weight:700;letter-spacing:.2px;box-shadow:var(--shadow);
+      border:none;cursor:pointer;text-decoration:none
+    }
+    .cta .btn:hover{transform:translateY(-1px);transition:.18s ease}
+    .small{font-size:13px;color:var(--muted);text-align:center}
+
+    .hero-text{display:flex;flex-direction:column;gap:10px}
+    .hero-text h1{margin:0;font-size:28px;line-height:1.2}
+    .hero-text p{margin:0;color:var(--muted)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--soft);
+      border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-size:14px}
+
+    .cover{border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
     .cover img{display:block;width:100%;height:auto}
-    .section{margin-top:36px}
-    .section h2{margin:0 0 10px;font-size:26px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    @media (max-width:980px){.hero-in{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
-    @media (max-width:640px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid rgba(127,141,170,.16);border-radius:16px;padding:18px;box-shadow:var(--shadow);height:100%}
+
+    /* Sections */
+    .section{margin-top:26px}
+    .section h2{margin:0 0 10px;font-size:22px}
+    .grid{display:grid;gap:12px;grid-template-columns:1fr}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
     .card h3{margin:0 0 6px;font-size:18px}
     .muted{color:var(--muted)}
-    .features ul{margin:10px 0 0 0;padding:0;list-style:none}
-    .features li{margin:8px 0;padding-left:0}
-    .bul{display:inline-block;min-width:1.4em}
-    .footer{margin:40px 0 20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;color:var(--muted)}
+    .features ul{margin:8px 0 0;padding:0;list-style:none}
+    .features li{margin:6px 0}
+    .bul{display:inline-block;min-width:1.2em}
+
+    /* Footer */
+    .footer{margin:36px 0 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;color:var(--muted)}
     .links a{color:var(--muted);margin-right:14px}
-    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--soft);border:1px solid rgba(127,141,170,.18);padding:8px 12px;border-radius:999px;color:var(--text)}
-    .storeBtns{display:flex;gap:10px;flex-wrap:wrap}
-    .ghost{background:transparent;border:1px solid rgba(127,141,170,.25)}
+
+    /* Responsive */
+    @media (min-width:720px){
+      .hero-body{grid-template-columns:.9fr 1.1fr}
+      .hero-text h1{font-size:34px}
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (min-width:1024px){
+      .grid{grid-template-columns:repeat(3,1fr)}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- Top -->
-    <div class="nav">
-      <div class="brand">
-        <img src="images/icon.png" alt="App icon" />
-        <b>Personal Diary – Mood Journal</b>
-      </div>
-      <div class="cta">
-        <!-- Replace href with your App Store link when ready -->
-        <a href="#" aria-label="Download on the App Store">Get the App</a>
-      </div>
+  <!-- Top bar: name only -->
+  <header class="bar">
+    <div class="bar-in">
+      <div class="brand">Personal Diary – Mood Journal</div>
     </div>
+  </header>
 
+  <main class="wrap">
     <!-- Hero -->
     <section class="hero">
-      <div class="hero-in">
-        <div>
-          <h1>Your thoughts deserve a private, beautiful place.</h1>
-          <p>
-            A calm, secure, and customizable diary to write freely, track your emotions,
-            and protect your memories — all in one peaceful space.
-          </p>
-          <div class="badges">
-            <span class="badge">🔒 Private lock (PIN / pattern / password)</span>
-            <span class="badge">📈 Mood tracker & analytics</span>
-            <span class="badge">🎨 Themes, fonts & backgrounds</span>
-            <span class="badge">☁️ Backup & restore</span>
+      <div class="hero-card">
+        <div class="hero-body">
+          <!-- Left: icon + big button (mobile-first) -->
+          <div class="icon-box">
+            <img class="app-icon" src="images/icon.png" alt="Personal Diary – Mood Journal icon" />
+            <div class="cta">
+              <a class="btn" href="https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394" aria-label="Get the app on the App Store">Get the App</a>
+              <div class="small">iPhone & iPad • Free to try</div>
+            </div>
           </div>
-          <div class="storeBtns" style="margin-top:14px;">
-            <a class="pill" href="#">Download</a>
-            <a class="pill ghost" href="#features">See features</a>
+
+          <!-- Right: text -->
+          <div class="hero-text">
+            <h1>Your thoughts deserve a private, beautiful place.</h1>
+            <p>
+              A calm, secure, and customizable diary to write freely, track your emotions,
+              and protect your memories — all in one peaceful space.
+            </p>
+            <div class="badges">
+              <span class="badge">🔒 PIN / Pattern / Password lock</span>
+              <span class="badge">📈 Mood tracker & analytics</span>
+              <span class="badge">🎨 Themes, fonts & backgrounds</span>
+              <span class="badge">☁️ Backup & restore</span>
+            </div>
           </div>
         </div>
-        <div class="cover">
-          <img src="images/cover.png" alt="App preview cover" />
-        </div>
+      </div>
+
+      <!-- Cover -->
+      <div class="cover">
+        <img src="images/cover.png" alt="App preview cover" />
       </div>
     </section>
 
-    <!-- What you can do -->
+    <!-- Features: short & scannable -->
     <section class="section" id="features">
       <h2>What you can do</h2>
       <div class="grid">
@@ -160,7 +199,7 @@
       <div class="grid">
         <div class="card"><h3>• Auto Backup</h3><p class="muted">Back up while you write — no extra steps.</p></div>
         <div class="card"><h3>• 30 photos per entry</h3><p class="muted">Tell richer stories with more images.</p></div>
-        <div class="card"><h3>• All themes & backgrounds</h3><p class="muted">Everything in one place, unlimited.</p></div>
+        <div class="card"><h3>• All themes & backgrounds</h3><p class="muted">Unlimited customization.</p></div>
         <div class="card"><h3>• Stickers & frames</h3><p class="muted">Access the full creative library.</p></div>
         <div class="card"><h3>• Custom app backgrounds</h3><p class="muted">Make the app truly yours.</p></div>
         <div class="card"><h3>• No Ads</h3><p class="muted">Pure, focused journaling.</p></div>
@@ -179,18 +218,29 @@
       </div>
     </section>
 
+    <!-- Big CTA near bottom for mobile -->
+    <section class="section">
+      <div class="card" style="text-align:center">
+        <img class="app-icon" src="images/icon.png" alt="Personal Diary – Mood Journal icon" style="width:96px;height:96px;margin-bottom:12px" />
+        <div class="cta" style="margin:0 auto">
+          <a class="btn" href="https://apps.apple.com/in/app/my-personal-diary-with-lock/id6739699394">Get the App</a>
+          <div class="small">iPhone & iPad • Free to try</div>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
       <div class="links">
         <a href="privacy.html">Privacy Policy</a>
         <a href="terms.html">Terms of Service</a>
       </div>
-      <div>© <span id="y"></span> Personal Diary</div>
+      <div>© <span id="year"></span> Personal Diary</div>
     </footer>
-  </div>
+  </main>
 
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
